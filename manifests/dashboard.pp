@@ -49,6 +49,10 @@
 #  (Optional) Log handler.
 #  Defaults to 'file'
 #
+# [*manage_horizon*]
+# (Optional) Whether horizon's conf is managed here or externally
+# Default to 'true'
+#
 class murano::dashboard(
   $package_ensure        = 'present',
   $dashboard_name        = undef,
@@ -61,6 +65,7 @@ class murano::dashboard(
   $client_debug_level    = 'ERROR',
   $log_handler           = 'file',
   $sync_db               = true,
+  $manage_horizon        = true,
 ) {
 
   include ::murano::deps
@@ -72,7 +77,7 @@ class murano::dashboard(
     tag    => ['openstack', 'murano-packages'],
   }
 
-  concat { $::murano::params::local_settings_path: }
+  if $manage_horizon { concat { $::murano::params::local_settings_path: } }
 
   concat::fragment { 'original_config':
     target => $::murano::params::local_settings_path,
