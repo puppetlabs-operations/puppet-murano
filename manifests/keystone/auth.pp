@@ -51,6 +51,13 @@
 #   (optional) The endpoint's internal url. (Defaults to 'http://127.0.0.1:8082
 #   This url should *not* contain any trailing '/'.
 #
+# [*configure_user*]
+#   Tell keystone to configure the user or not
+#   Defaults to true
+#
+# [*configure_user_role*]
+#   Tell keystone to configure the user role or not
+#   Defaults to true
 # === Examples
 #
 #  class { 'murano::keystone::auth':
@@ -73,13 +80,15 @@ class murano::keystone::auth(
   $public_url          = 'http://127.0.0.1:8082',
   $admin_url           = 'http://127.0.0.1:8082',
   $internal_url        = 'http://127.0.0.1:8082',
+  $configure_user      = true,
+  $configure_user_role = true,
 ) {
 
   $real_service_name = pick($service_name, $auth_name)
 
   keystone::resource::service_identity { $real_service_name:
-    configure_user      => true,
-    configure_user_role => true,
+    configure_user      => $configure_user,
+    configure_user_role => $configure_user_role,
     configure_endpoint  => $configure_endpoint,
     service_type        => $service_type,
     service_description => $service_description,

@@ -301,26 +301,26 @@ class murano(
 
     'oslo_messaging_rabbit/rabbit_userid' :    value => $rabbit_os_user;
     'oslo_messaging_rabbit/rabbit_password' :  value => $rabbit_os_password;
-    'oslo_messaging_rabbit/rabbit_hosts' :     value => $rabbit_os_host;
+    'oslo_messaging_rabbit/rabbit_hosts' :     value => join(any2array($rabbit_os_host), ',');
     'oslo_messaging_rabbit/rabbit_port' :      value => $rabbit_os_port;
     'oslo_messaging_rabbit/rabbit_ha_queues' : value => $rabbit_ha_queues;
 
     'rabbitmq/login' :                         value => $rabbit_own_user;
     'rabbitmq/password' :                      value => $rabbit_own_password;
-    'rabbitmq/host' :                          value => $rabbit_own_host;
+    'rabbitmq/host' :                          value => join(any2array($rabbit_own_host), ',');
     'rabbitmq/port' :                          value => $rabbit_own_port;
     'rabbitmq/virtual_host' :                  value => $rabbit_own_vhost;
 
-    'keystone_authtoken/auth_uri' :          value => $auth_uri;
-    'keystone_authtoken/admin_user' :        value => $admin_user;
-    'keystone_authtoken/admin_tenant_name' : value => $admin_tenant_name;
-    'keystone_authtoken/signing_dir' :       value => $signing_dir;
-    'keystone_authtoken/admin_password' :    value => $admin_password;
-    'keystone_authtoken/identity_uri' :      value => $identity_uri;
+    'keystone_authtoken/auth_uri' :            value   => $auth_uri;
+    'keystone_authtoken/admin_user' :          value   => $admin_user;
+    'keystone_authtoken/admin_tenant_name' :   value   => $admin_tenant_name;
+    'keystone_authtoken/signing_dir' :         value   => $signing_dir;
+    'keystone_authtoken/admin_password' :      value   => $admin_password;
+    'keystone_authtoken/identity_uri' :        value   => $identity_uri;
 
-    'networking/default_dns':                value => $default_nameservers;
+    'networking/default_dns':                  value   => $default_nameservers;
 
-    'packages_opts/packages_service':        value => $packages_service,
+    'packages_opts/packages_service':          value   => $packages_service,
   }
 
   if $sync_db {

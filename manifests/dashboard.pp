@@ -45,6 +45,10 @@
 #  (Optional) Whether to sync database
 #  Default to 'true'
 #
+# [*manage_horizon*]
+# (Optional) Whether horizon's conf is managed here or externally
+# Default to 'true'
+#
 class murano::dashboard(
   $package_ensure        = 'present',
   $repo_url              = undef,
@@ -55,6 +59,7 @@ class murano::dashboard(
   $dashboard_debug_level = 'DEBUG',
   $client_debug_level    = 'ERROR',
   $sync_db               = true,
+  $manage_horizon        = true,
   # DEPRECATED PARAMETERS
   $api_url               = undef,
 ) {
@@ -71,7 +76,7 @@ class murano::dashboard(
     tag    => ['openstack', 'murano-packages'],
   }
 
-  concat { $::murano::params::local_settings_path: }
+  if $manage_horizon { concat { $::murano::params::local_settings_path: } }
 
   concat::fragment { 'original_config':
     target => $::murano::params::local_settings_path,
